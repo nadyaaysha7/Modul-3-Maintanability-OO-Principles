@@ -66,4 +66,50 @@ class ProductRepositoryTest {
         assertEquals(product2.getProductId(), savedProduct.getProductId());
         assertFalse(productIterator.hasNext());
     }
+
+    @Test
+    void testEditProductPositive() {
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-4600-8860-71af6af63b06");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId("eb558e9f-1c39-4600-8860-71af6af63b06");
+        updatedProduct.setProductName("Sampo Cap Bango");
+        updatedProduct.setProductQuantity(50);
+
+        Product result = productRepository.update(updatedProduct);
+
+        assertNotNull(result);
+        assertEquals("Sampo Cap Bango", result.getProductName());
+        assertEquals(50, result.getProductQuantity());
+
+        Product productInRepo = productRepository.findById("eb558e9f-1c39-4600-8860-71af6af63b06");
+        assertEquals("Sampo Cap Bango", productInRepo.getProductName());
+        assertEquals(50, productInRepo.getProductQuantity());
+    }
+
+    @Test
+    void testEditProductNegative() {
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-4600-8860-71af6af63b06");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId("id-ngasal-yang-tidak-ada");
+        updatedProduct.setProductName("Kecap Cap Bango");
+        updatedProduct.setProductQuantity(20);
+
+        Product result = productRepository.update(updatedProduct);
+
+        assertNull(result);
+
+        Product productInRepo = productRepository.findById("eb558e9f-1c39-4600-8860-71af6af63b06");
+        assertEquals("Sampo Cap Bambang", productInRepo.getProductName());
+        assertEquals(100, productInRepo.getProductQuantity());
+    }
 }
