@@ -1,0 +1,28 @@
+name: PMD Code Analysis
+
+# Triggers the new code scanning/analysis on every push events to every branch
+on:
+  push:
+
+jobs:
+  pmd-analysis:
+    name: Run PMD Scanner
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java Toolchain
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - name: Run PMD
+        uses: pmd/pmd-github-action@v2
+        with:
+          # Using 7.0.0-rc4 because 6.x does not support Java 21 yet
+          version: '7.0.0-rc4'
+          sourcePath: 'src/main/java'
+          rulesets: 'rulesets/java/quickstart.xml'
+          analyzeModifiedFilesOnly: false
