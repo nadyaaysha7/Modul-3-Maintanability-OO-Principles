@@ -30,4 +30,14 @@ class ProductTest {
     void testGetProductQuantity() {
         assertEquals(100, this.product.getProductQuantity());
     }
+
+    @Test
+    void testSetProductQuantityNegativeThrowsException() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            this.product.setProductQuantity(-10);
+        });
+
+        // Optional: Verify the exception message matches exactly what you threw
+        assertEquals("Kuantitas produk tidak boleh negatif", exception.getMessage());
+    }
 }
