@@ -26,6 +26,8 @@ Jika kita membuat **functional test** baru dengan menduplikasi `CreateProductFun
 
 2. Iya, *setup* saat ini memenuhi CI karena dengan secara otomatis nge-*run tests* dan *code security scans* setiap kali *code* di-*push* atau ada *pull request* yang dibuat. *Setup* juga memenuhi CD dengan nge-*trigger* secara otomatis *update* terbaru ke Render setelah ada *kode* baru yang di-*merge* ke *branch* `main` sehingga tidak perlu manual *deployment* lagi.
 
+---
+
 ## Modul 3 - Maintanability, OO Principles
 
 1. Prinsip SOLID yang saya terapkan pada modul 3 ini adalah, pertama, SRP, dimana saya pisahin `CarController` jadi file sendiri karena sebuah *class* harus punya satu alasan untuk berubah jika ada yang harus diubah. Kedua, adalah OCP, saya hapus *inheritance* '*extends ProductController*' agar *entity software* terbuka untuk pengembangan dan tertutup untuk modifikasi. Ketiga, LSP, dengan menghapus *inheritance* tersebut maka dapat dipastikan tidak ada pelanggaran *subclass* harus bisa menggantikan *base class* tanpa mengubah properti program. Keempat, ISP, saya tetap pertahankan *interface* `CarService` agar tetap spesifik atas *methods* yang relevan bagi klien. Terakhir, DIP, saya mengubah *injeksi* pada *controller* dan *service* agar modul tingkat tinggi tidak *dependent* dengan modul tingkat rendah tapi keduanya bergantung pada abstraksi.
@@ -33,3 +35,5 @@ Jika kita membuat **functional test** baru dengan menduplikasi `CreateProductFun
 2. *Benefit* dari menerapkan SOLID adalah agar *kode* menjadi jauh lebih terstuktur, mudah di-*maintain*, dan fleksibel untuk dikembangkan. Contohnya, penerapan SRP dan OCP, dengan memisahkan `CarController` dari `ProductController`, kalau suatu saat ada perubahan *logic* untuk produk, *controller* mobil tidak ikut terdampak.
 
 3. Kerugian jika tidak menerapkan SOLID adalah arsitektur *kode* akan kaku, rentan terhadap *bug*, dan sulit di-*maintain*. Contohnya, kalau tidak menerapkan LSP, ketika `CarController` meng-*extend* `ProductController`, maka secara paksa akan digabungkan dua *entity* berbeda ini yang tidak bisa saling menggantikan secara logis. Jika diubah fungsi *base* dari `ProductController`, alur `Car` bisa saja tidak sengaja jadi rusak.
+
+---
