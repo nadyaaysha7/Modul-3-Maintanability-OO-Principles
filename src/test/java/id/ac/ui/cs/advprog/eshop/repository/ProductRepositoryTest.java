@@ -68,6 +68,41 @@ class ProductRepositoryTest {
     }
 
     @Test
+    void testFindByIdIfProductNotFound() {
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        // Search for an ID that doesn't exist.
+        // This forces the loop condition to be false and the loop to finish naturally.
+        Product foundProduct = productRepository.findById("id-ngasal-yang-tidak-ada");
+        assertNull(foundProduct);
+    }
+
+    @Test
+    void testFindByIdIfProductIsSecondItem() {
+        Product product1 = new Product();
+        product1.setProductId("1");
+        product1.setProductName("Sampo Cap Bambang");
+        product1.setProductQuantity(100);
+        productRepository.create(product1);
+
+        Product product2 = new Product();
+        product2.setProductId("2");
+        product2.setProductName("Sampo Cap Usep");
+        product2.setProductQuantity(50);
+        productRepository.create(product2);
+
+        // Search for the second product.
+        // This forces the loop to evaluate to false on the first item, and true on the second.
+        Product foundProduct = productRepository.findById("2");
+        assertNotNull(foundProduct);
+        assertEquals(product2.getProductId(), foundProduct.getProductId());
+    }
+
+    @Test
     void testEditProductPositive() {
         Product product = new Product();
         product.setProductId("eb558e9f-1c39-4600-8860-71af6af63b06");
