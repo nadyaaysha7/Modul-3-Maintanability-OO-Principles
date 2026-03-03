@@ -3,10 +3,10 @@ package id.ac.ui.cs.advprog.eshop.service;
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import java.util.List;
 
-public interface ProductService {
-    public Product create(Product product);
-    public List<Product> findAll();
-    public Product findById(String id);
-    public Product update(Product product);
-    public void delete(String id);
+interface ProductService {
+    Product create(Product product);
+    List<Product> findAll();
+    Product findById(String id);
+    Product update(Product product);
+    void delete(String id);
 }
