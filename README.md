@@ -37,3 +37,13 @@ Jika kita membuat **functional test** baru dengan menduplikasi `CreateProductFun
 3. Kerugian jika tidak menerapkan SOLID adalah arsitektur *kode* akan kaku, rentan terhadap *bug*, dan sulit di-*maintain*. Contohnya, kalau tidak menerapkan LSP, ketika `CarController` meng-*extend* `ProductController`, maka secara paksa akan digabungkan dua *entity* berbeda ini yang tidak bisa saling menggantikan secara logis. Jika diubah fungsi *base* dari `ProductController`, alur `Car` bisa saja tidak sengaja jadi rusak.
 
 ---
+
+## Modul 4 - TDD & Refactoring
+
+1. Alur TDD ini terbukti sangat berguna bagi saya, karena dengan menulis tes terlebih dahulu, saya dipaksa untuk memikirkan *edge cases* (seperti input kosong atau status tidak valid) sebelum menulis kode aslinya. Hal ini membuat proses implementasi menjadi lebih terarah dan memberikan rasa aman saat melakukan *refactor* kode. Ke depannya, hal yang perlu saya tingkatkan lagi adalah menganalisis domain masalah lebih dalam di awal, agar saya tidak melewatkan skenario negatif saat membuat *test suite*.
+
+2. Secara keseluruhan, *unit test* yang saya buat sudah berhasil mengikuti prinsip F.I.R.S.T. Pertama, **Fast**, yakni tes berjalan sangat cepat karena berjalan secara lokal. Kedua, **Independent**, setiap tes berdiri sendiri karena penggunaan anotasi `@BeforeEach` yang mereset *state* objek sebelum tiap tes dijalankan. Ketiga, **Repeatable**, adalah ketika tes dapat dijalankan berkali-kali di berbagai *environment* dengan hasil yang konsisten karena kita menggunakan *mocking* pada *layer* Service. Keempat, **Self-Validating**, karena tes secara otomatis menentukan apakah ia lulus atau gagal menggunakan asersi tanpa perlu pengecekan manual. Terakhir, **Timely**, yakni tes ditulis tepat waktu, yakni sebelum kode produksi dibuat sesuai dengan siklus TDD.
+
+Untuk tes-tes ke depan, hal yang perlu saya lakukan adalah terus konsisten menjaga dependensi eksternal tetap terisolasi menggunakan *mock* agar prinsip *Fast* dan *Independent* tidak rusak seiring bertambah kompleksnya aplikasi.
+
+---
