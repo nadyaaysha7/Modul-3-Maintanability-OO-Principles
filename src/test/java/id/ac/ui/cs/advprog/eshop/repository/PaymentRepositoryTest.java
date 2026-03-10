@@ -20,7 +20,6 @@ class PaymentRepositoryTest {
         paymentRepository = new PaymentRepository();
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode", "ESHOP1234ABC5678");
-        // Using Enum here
         payment = new Payment("pay-123", PaymentMethod.VOUCHER.getValue(), paymentData);
     }
 
