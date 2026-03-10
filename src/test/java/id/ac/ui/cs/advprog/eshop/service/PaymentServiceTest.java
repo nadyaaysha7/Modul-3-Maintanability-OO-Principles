@@ -5,6 +5,7 @@ import enums.PaymentMethod;
 import enums.PaymentStatus;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
+import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.repository.PaymentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,15 @@ class PaymentServiceTest {
 
     @BeforeEach
     void setup() {
-        order = new Order("order-123", new ArrayList<>(), 1708560000L, "Safira");
+        List<Product> products = new ArrayList<>();
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(2);
+        products.add(product);
+
+        order = new Order("order-123", products, 1708560000L, "Safira");
+
         paymentData = new HashMap<>();
         paymentData.put("voucherCode", "ESHOP1234ABC5678");
     }
@@ -65,7 +74,6 @@ class PaymentServiceTest {
         Payment updatedPayment = paymentService.setStatus(payment, PaymentStatus.SUCCESS.getValue());
 
         assertEquals(PaymentStatus.SUCCESS.getValue(), updatedPayment.getStatus());
-        // Verifies the order status was updated to SUCCESS
         verify(orderService, times(1)).updateStatus(order.getId(), OrderStatus.SUCCESS.getValue());
         verify(paymentRepository, times(1)).save(payment);
     }
@@ -80,7 +88,6 @@ class PaymentServiceTest {
         Payment updatedPayment = paymentService.setStatus(payment, PaymentStatus.REJECTED.getValue());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), updatedPayment.getStatus());
-        // Verifies the order status was updated to FAILED
         verify(orderService, times(1)).updateStatus(order.getId(), OrderStatus.FAILED.getValue());
         verify(paymentRepository, times(1)).save(payment);
     }
